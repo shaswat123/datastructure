@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
 public class BinaryTree {
 
@@ -69,34 +70,60 @@ public class BinaryTree {
 
         stack.push(root);
 
-        while(!stack.isEmpty()){
+        while(!stack.isEmpty()) {
 
-            TreeNode tempRoot=stack.pop();
+            TreeNode tempRoot = stack.pop();
             System.out.println(tempRoot.data);
 
-            if(tempRoot.right!=null){
+            if (tempRoot.right != null) {
                 stack.push(tempRoot.right);
             }
 
-            if(tempRoot.left!=null){
+            if (tempRoot.left != null) {
                 stack.push(tempRoot.left);
             }
 
 
         }
-
-
-
-
     }
+
+    public void InOrderTraversalRecursive(TreeNode root){
+
+        if(root==null){//base case
+            return;
+        }
+
+        InOrderTraversalRecursive(root.left);
+        System.out.println(root.data+"");
+        InOrderTraversalRecursive(root.right);
+    }
+
+    public void InOrderTraversalIterative(TreeNode root){
+
+        if(root==null){//base case
+            return;
+        }
+
+        InOrderTraversalRecursive(root.left);
+        System.out.println(root.data+"");
+        InOrderTraversalRecursive(root.right);
+    }
+
+
 
     public static void main(String[] args) {
 
         BinaryTree binaryTree = new BinaryTree();
 
         binaryTree.createBinaryTree();
+
+        System.out.println("Pre Order traversal");
         binaryTree.preOrderRecursive(binaryTree.root);
-        //binaryTree.preOrderIterative(binaryTree.root);
+        System.out.println("Iterative");
+        binaryTree.preOrderIterative(binaryTree.root);
+
+        System.out.println("In Order traversal");
+        binaryTree.InOrderTraversalRecursive(binaryTree.root);
 
 
     }
