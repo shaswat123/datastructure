@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
@@ -70,16 +72,16 @@ public class BinaryTree {
 
         stack.push(root);
 
-        while(!stack.isEmpty()) {
+        while(!stack.isEmpty()){
 
-            TreeNode tempRoot = stack.pop();
+            TreeNode tempRoot=stack.pop();
             System.out.println(tempRoot.data);
 
-            if (tempRoot.right != null) {
+            if(tempRoot.right!=null){
                 stack.push(tempRoot.right);
             }
 
-            if (tempRoot.left != null) {
+            if(tempRoot.left!=null){
                 stack.push(tempRoot.left);
             }
 
@@ -100,14 +102,67 @@ public class BinaryTree {
 
     public void InOrderTraversalIterative(TreeNode root){
 
-        if(root==null){//base case
+        Stack<TreeNode> stack = new Stack();
+
+        if(root==null){
             return;
         }
 
-        InOrderTraversalRecursive(root.left);
-        System.out.println(root.data+"");
-        InOrderTraversalRecursive(root.right);
+        TreeNode temp=root;
+
+        while(!stack.isEmpty() || temp!=null ){
+
+            if(temp!=null){
+                stack.push(temp);
+                temp=temp.left;
+            }
+            else{
+                temp=stack.pop();
+                System.out.println(temp.data+"");
+                temp=temp.right;
+            }
+        }
     }
+
+    public void postOrderTraversalRecursive(TreeNode root){
+
+        if(root==null){ //base case
+            return ;
+        }
+
+        postOrderTraversalRecursive(root.left);
+        postOrderTraversalRecursive(root.right);
+        System.out.println(root.data+"");
+    }
+
+    public void levelOrderTraversalBinaryTree(TreeNode root){
+
+        if(root==null){
+            return ;
+        }
+
+        Queue<TreeNode> queue = new LinkedList();
+
+        TreeNode temp=null;
+        queue.offer(root);
+
+        while(!queue.isEmpty()){
+
+            temp= queue.poll();
+            System.out.println(temp.data+"");
+
+            if(temp.left!=null){
+                queue.offer(temp.left);
+            }
+            if(temp.right!=null){
+                queue.offer(temp.right);
+            }
+
+
+        }
+
+    }
+
 
 
 
@@ -124,6 +179,15 @@ public class BinaryTree {
 
         System.out.println("In Order traversal");
         binaryTree.InOrderTraversalRecursive(binaryTree.root);
+
+        System.out.println("Iterative");
+        binaryTree.InOrderTraversalIterative(binaryTree.root);
+
+        System.out.println("Post Order traversal");
+        binaryTree.postOrderTraversalRecursive(binaryTree.root);
+
+        System.out.println("Level Order traversal");
+        binaryTree.levelOrderTraversalBinaryTree(binaryTree.root);
 
 
     }
